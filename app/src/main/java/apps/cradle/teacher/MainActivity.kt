@@ -1,15 +1,17 @@
 package apps.cradle.teacher
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.TextView
+import android.view.LayoutInflater
 import androidx.activity.ComponentActivity
 
 class MainActivity : ComponentActivity() {
 
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val textView = TextView(this)
-        textView.text = "Hello, world!"
-        setContentView(textView)
+        val inflater = LayoutInflater.from(this)
+        val contentView = inflater.inflate(R.layout.activity_main, null)
+        setContentView(contentView)
     }
 }

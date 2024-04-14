@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">Teacher</string>
+    <string name="appName">Teacher</string>
+    <string name="activityMainAim">Реши ещё 10 примеров без ошибок, чтобы завершить упражнение.</string>
+    <string name="activityMainTask">2 + 2 =</string>
+    <string name="button1">1</string>
+    <string name="button2">2</string>
+    <string name="button3">3</string>
+    <string name="button4">4</string>
+    <string name="button5">5</string>
+    <string name="button6">6</string>
+    <string name="button7">7</string>
+    <string name="button8">8</string>
+    <string name="button9">9</string>
+    <string name="button0">0</string>
+    <string name="buttonBackspace"><![CDATA[<-]]></string>
+    <string name="buttonOk">OK</string>
 </resources>
