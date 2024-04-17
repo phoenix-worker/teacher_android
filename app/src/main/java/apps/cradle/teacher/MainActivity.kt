@@ -2,16 +2,20 @@ package apps.cradle.teacher
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.ComponentActivity
+import apps.cradle.teacher.databinding.ActivityMainBinding
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val inflater = LayoutInflater.from(this)
-        val contentView = inflater.inflate(R.layout.activity_main, null)
-        setContentView(contentView)
+        binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+        setContentView(binding.root)
+        Log.d("CHOP CHOP", "Мы находимся внутри метода onCreate()")
     }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ButtonTextStyle">
+        <item name="android:background">@drawable/ripple_light_gray_background</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">@dimen/buttonTextSize</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/textViewPadding</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ButtonTextStyle.Green">
+        <item name="android:background">@drawable/ripple_light_green_background</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
