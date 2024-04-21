@@ -1,7 +1,8 @@
 <resources>
     <string name="appName">Teacher</string>
-    <string name="activityMainAim">Реши ещё 10 примеров без ошибок, чтобы завершить упражнение.</string>
-    <string name="activityMainTask">2 + 2 =</string>
+    <string name="activityMainAim">Реши ещё %1$s примеров без ошибок, чтобы завершить упражнение.</string>
+    <string name="activityMainTaskFinished">Молодец! Упражнение успешно выполнено.</string>
+    <string name="activityMainTask">%1$s %2$s %3$s = %4$s</string>
     <string name="button1">1</string>
     <string name="button2">2</string>
     <string name="button3">3</string>
