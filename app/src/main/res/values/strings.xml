@@ -15,4 +15,6 @@
     <string name="button0">0</string>
     <string name="buttonBackspace"><![CDATA[<-]]></string>
     <string name="buttonOk">OK</string>
+    <string name="errorDialogTitle">Ошибка!</string>
+    <string name="buttonUnderstood">Понятно</string>
 </resources>

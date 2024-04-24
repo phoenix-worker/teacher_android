@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import apps.cradle.teacher.databinding.ActivityMainBinding
 import kotlin.random.Random
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -117,7 +117,32 @@ class MainActivity : ComponentActivity() {
         val userAnswer = userInput.toString().toInt()
         if (userAnswer == correctAnswer) {
             if (tasksCount > 0) tasksCount--
-        } else tasksCount = 10
+        } else {
+            tasksCount = 10
+            showErrorDialog(correctAnswer)
+        }
         updateTask()
+    }
+
+    private fun showErrorDialog(correctAnswer: Int) {
+        val errorDialog = ErrorDialogFragment()
+        val correctAnswerString = getCorrectAnswerString(correctAnswer)
+        val bundle = Bundle()
+        bundle.putString(ErrorDialogFragment.EXTRA_MESSAGE, correctAnswerString)
+        errorDialog.arguments = bundle
+        errorDialog.show(supportFragmentManager, "error_dialog")
+    }
+
+    private fun getCorrectAnswerString(correctAnswer: Int): String {
+        val builder = StringBuilder()
+        builder.append(firstOperand)
+        when (action) {
+            ACTION.ADDITION -> builder.append(" + ")
+            ACTION.SUBTRACTION -> builder.append(" - ")
+        }
+        builder.append(secondOperand)
+        builder.append(" = ")
+        builder.append(correctAnswer)
+        return builder.toString()
     }
 }
