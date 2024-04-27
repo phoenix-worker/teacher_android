@@ -1,10 +1,12 @@
 package apps.cradle.teacher
 
 import android.annotation.SuppressLint
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.FragmentActivity
+import androidx.preference.PreferenceManager
 import apps.cradle.teacher.databinding.ActivityMainBinding
 import kotlin.random.Random
 
@@ -20,7 +22,7 @@ class MainActivity : FragmentActivity() {
     private var secondOperand: Int = 0
     private var action: ACTION = ACTION.ADDITION
     private val userInput: StringBuilder = StringBuilder()
-    private var tasksCount: Int = 10
+    private var tasksCount: Int = DAILY_TASKS_COUNT
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +30,16 @@ class MainActivity : FragmentActivity() {
         binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         setListeners()
+        tasksCount = if (isTodayExerciseDone()) 0 else DAILY_TASKS_COUNT
         updateTask()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (!isTodayExerciseDone() && tasksCount == 0) {
+            tasksCount = DAILY_TASKS_COUNT
+            updateTaskUi()
+        }
     }
 
     private fun setListeners() {
@@ -116,9 +127,12 @@ class MainActivity : FragmentActivity() {
         }
         val userAnswer = userInput.toString().toInt()
         if (userAnswer == correctAnswer) {
-            if (tasksCount > 0) tasksCount--
+            if (tasksCount > 0) {
+                tasksCount--
+                if (tasksCount == 0) saveTodayProgress()
+            }
         } else {
-            tasksCount = 10
+            if (!isTodayExerciseDone()) tasksCount = DAILY_TASKS_COUNT
             showErrorDialog(correctAnswer)
         }
         updateTask()
@@ -144,5 +158,30 @@ class MainActivity : FragmentActivity() {
         builder.append(" = ")
         builder.append(correctAnswer)
         return builder.toString()
+    }
+
+    private fun saveTodayProgress() {
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .edit()
+            .putLong(PREF_LAST_SUCCESS_DATE, System.currentTimeMillis())
+            .apply()
+    }
+
+    private fun isTodayExerciseDone(): Boolean {
+        val today = System.currentTimeMillis()
+        val lastSuccess = PreferenceManager.getDefaultSharedPreferences(this)
+            .getLong(PREF_LAST_SUCCESS_DATE, 0L)
+        val todayCalendar = Calendar.getInstance().apply { timeInMillis = today }
+        val lastCalendar = Calendar.getInstance().apply { timeInMillis = lastSuccess }
+        val years = todayCalendar.get(Calendar.YEAR) == lastCalendar.get(Calendar.YEAR)
+        val months = todayCalendar.get(Calendar.MONTH) == lastCalendar.get(Calendar.MONTH)
+        val days =
+            todayCalendar.get(Calendar.DAY_OF_MONTH) == lastCalendar.get(Calendar.DAY_OF_MONTH)
+        return years && months && days
+    }
+
+    companion object {
+        const val DAILY_TASKS_COUNT = 10
+        const val PREF_LAST_SUCCESS_DATE = "pref_last_success_date"
     }
 }

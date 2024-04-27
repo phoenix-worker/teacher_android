@@ -67,4 +67,6 @@ dependencies {
 
     //noinspection UseTomlInstead
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+    //noinspection UseTomlInstead
+    implementation("androidx.preference:preference-ktx:1.2.1")
 }
