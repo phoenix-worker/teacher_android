@@ -17,4 +17,5 @@
     <string name="buttonOk">OK</string>
     <string name="errorDialogTitle">Ошибка!</string>
     <string name="buttonUnderstood">Понятно</string>
+    <string name="activityMainError">Не удалось отправить результат на сервер. Нажмите сюда, чтобы попробовать снова.</string>
 </resources>

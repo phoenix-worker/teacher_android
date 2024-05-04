@@ -3,11 +3,25 @@ package apps.cradle.teacher
 import android.annotation.SuppressLint
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import apps.cradle.teacher.databinding.ActivityMainBinding
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.post
+import io.ktor.http.URLProtocol
+import io.ktor.http.path
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import kotlin.random.Random
 
 class MainActivity : FragmentActivity() {
@@ -56,6 +70,7 @@ class MainActivity : FragmentActivity() {
             button9.setOnClickListener(onButtonClick)
             buttonBackspace.setOnClickListener(onButtonClick)
             buttonOK.setOnClickListener(onButtonClick)
+            serverErrorView.setOnClickListener { notifyServerTodayTaskFinished() }
         }
     }
 
@@ -165,6 +180,7 @@ class MainActivity : FragmentActivity() {
             .edit()
             .putLong(PREF_LAST_SUCCESS_DATE, System.currentTimeMillis())
             .apply()
+        notifyServerTodayTaskFinished()
     }
 
     private fun isTodayExerciseDone(): Boolean {
@@ -180,7 +196,49 @@ class MainActivity : FragmentActivity() {
         return years && months && days
     }
 
+    private fun notifyServerTodayTaskFinished() {
+        val client = HttpClient(Android) {
+            install(ContentNegotiation) {
+                json()
+            }
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val result = client.post {
+                    url {
+                        protocol = URLProtocol.HTTP
+                        host = "192.168.0.127:100"
+                        path("notifyTodayTaskFinished")
+                    }
+                }
+                val serverResponse: ServerResponse = result.body()
+                if (serverResponse.result == "success") {
+                    Log.d(DEBUG_LOG, "Result successfully stored on server.")
+                    setErrorViewVisibility(false)
+                } else {
+                    Log.d(DEBUG_LOG, "Internal server error.")
+                    setErrorViewVisibility(true)
+                }
+            } catch (exc: Exception) {
+                Log.d(DEBUG_LOG, "Exception: $exc")
+                setErrorViewVisibility(true)
+            }
+        }
+    }
+
+    private fun setErrorViewVisibility(isVisible: Boolean) {
+        lifecycleScope.launch {
+            binding.serverErrorView.isVisible = isVisible
+        }
+    }
+
+    @Serializable
+    data class ServerResponse(
+        val result: String
+    )
+
     companion object {
+        const val DEBUG_LOG = "CHOP-CHOP"
         const val DAILY_TASKS_COUNT = 10
         const val PREF_LAST_SUCCESS_DATE = "pref_last_success_date"
     }

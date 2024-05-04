@@ -4,4 +4,5 @@
     <color name="greenBackground">#4CAF50</color>
     <color name="widgetBackground">#37474F</color>
     <color name="rippleColor">#98FFFFFF</color>
+    <color name="errorColor">#E65B5B</color>
 </resources>

@@ -19,6 +19,19 @@
         android:textSize="@dimen/aimTextSize" />
 
     <TextView
+        android:id="@+id/serverErrorView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/smallMargin"
+        android:background="@drawable/ripple_light_red_background"
+        android:padding="@dimen/textViewPadding"
+        android:text="@string/activityMainError"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/aimTextSize"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <TextView
         android:id="@+id/task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

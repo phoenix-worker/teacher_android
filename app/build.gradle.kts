@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    kotlin("plugin.serialization") version "1.9.23"
 }
 
 android {
@@ -47,6 +48,7 @@ android {
     }
 }
 
+//noinspection UseTomlInstead
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -65,8 +67,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //noinspection UseTomlInstead
     implementation("androidx.fragment:fragment-ktx:1.6.2")
-    //noinspection UseTomlInstead
     implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("io.ktor:ktor-client-core:2.3.10")
+    implementation("io.ktor:ktor-client-android:2.3.10")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.10")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.10")
+
 }
