@@ -80,16 +80,23 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun generateTask() {
-        firstOperand = Random.nextInt(10)
-        secondOperand = Random.nextInt(10)
-        action = actionList[Random.nextInt(2)]
+        action = actionList[Random.nextInt(actionList.size)]
+        when (action) {
+            ACTION.SUBTRACTION -> {
+                firstOperand = Random.nextInt(20)
+                secondOperand = Random.nextInt(20)
+                if (firstOperand < secondOperand) {
+                    val temp = firstOperand
+                    firstOperand = secondOperand
+                    secondOperand = temp
+                }
+            }
 
-        if (firstOperand < secondOperand) {
-            val temp = firstOperand
-            firstOperand = secondOperand
-            secondOperand = temp
+            ACTION.ADDITION -> {
+                firstOperand = Random.nextInt(10)
+                secondOperand = Random.nextInt(10)
+            }
         }
-
         userInput.clear()
     }
 
@@ -207,7 +214,7 @@ class MainActivity : FragmentActivity() {
                 val result = client.post {
                     url {
                         protocol = URLProtocol.HTTP
-                        host = "192.168.0.127:100"
+                        host = "192.168.0.91:100"
                         path("notifyTodayTaskFinished")
                     }
                 }
@@ -239,7 +246,7 @@ class MainActivity : FragmentActivity() {
 
     companion object {
         const val DEBUG_LOG = "CHOP-CHOP"
-        const val DAILY_TASKS_COUNT = 10
+        const val DAILY_TASKS_COUNT = 15
         const val PREF_LAST_SUCCESS_DATE = "pref_last_success_date"
     }
 }
