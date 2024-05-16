@@ -27,7 +27,7 @@
         android:padding="@dimen/textViewPadding"
         android:text="@string/activityMainError"
         android:textColor="@color/textColor"
-        android:textSize="@dimen/aimTextSize"
+        android:textSize="@dimen/errorTextSize"
         android:visibility="gone"
         tools:visibility="visible" />
 

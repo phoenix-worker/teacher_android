@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="errorTextSize">24sp</dimen>
     <dimen name="aimTextSize">40sp</dimen>
     <dimen name="textViewPadding">32dp</dimen>
     <dimen name="taskTextSize">80sp</dimen>

@@ -6,7 +6,6 @@
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textSize">@dimen/buttonTextSize</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">@dimen/textViewPadding</item>
         <item name="android:clickable">true</item>
     </style>
 

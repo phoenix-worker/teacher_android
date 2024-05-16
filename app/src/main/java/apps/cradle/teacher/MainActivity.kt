@@ -83,8 +83,8 @@ class MainActivity : FragmentActivity() {
         action = actionList[Random.nextInt(actionList.size)]
         when (action) {
             ACTION.SUBTRACTION -> {
-                firstOperand = Random.nextInt(20)
-                secondOperand = Random.nextInt(20)
+                firstOperand = Random.nextInt(100)
+                secondOperand = Random.nextInt(100)
                 if (firstOperand < secondOperand) {
                     val temp = firstOperand
                     firstOperand = secondOperand
@@ -93,8 +93,10 @@ class MainActivity : FragmentActivity() {
             }
 
             ACTION.ADDITION -> {
-                firstOperand = Random.nextInt(10)
-                secondOperand = Random.nextInt(10)
+                val first = Random.nextInt(1, 10) * 10
+                val second = 100 - first
+                firstOperand = Random.nextInt(first)
+                secondOperand = Random.nextInt(second)
             }
         }
         userInput.clear()
@@ -246,7 +248,7 @@ class MainActivity : FragmentActivity() {
 
     companion object {
         const val DEBUG_LOG = "CHOP-CHOP"
-        const val DAILY_TASKS_COUNT = 15
+        const val DAILY_TASKS_COUNT = 5
         const val PREF_LAST_SUCCESS_DATE = "pref_last_success_date"
     }
 }
