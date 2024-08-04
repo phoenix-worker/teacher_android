@@ -11,14 +11,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import apps.cradle.teacher.databinding.ActivityMainBinding
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.engine.android.Android
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.post
-import io.ktor.http.URLProtocol
-import io.ktor.http.path
-import io.ktor.serialization.kotlinx.json.json
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.android.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -28,9 +27,10 @@ class MainActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private enum class ACTION { ADDITION, SUBTRACTION }
+    private enum class ACTION { ADDITION, SUBTRACTION, MULTIPLICATION }
 
-    private val actionList: List<ACTION> = listOf(ACTION.ADDITION, ACTION.SUBTRACTION)
+    private val actionList: List<ACTION> =
+        listOf(ACTION.ADDITION, ACTION.SUBTRACTION, ACTION.MULTIPLICATION)
 
     private var firstOperand: Int = 0
     private var secondOperand: Int = 0
@@ -83,8 +83,8 @@ class MainActivity : FragmentActivity() {
         action = actionList[Random.nextInt(actionList.size)]
         when (action) {
             ACTION.SUBTRACTION -> {
-                firstOperand = Random.nextInt(100)
-                secondOperand = Random.nextInt(100)
+                firstOperand = Random.nextInt(200)
+                secondOperand = Random.nextInt(200)
                 if (firstOperand < secondOperand) {
                     val temp = firstOperand
                     firstOperand = secondOperand
@@ -93,10 +93,15 @@ class MainActivity : FragmentActivity() {
             }
 
             ACTION.ADDITION -> {
-                val first = Random.nextInt(1, 10) * 10
-                val second = 100 - first
+                val first = Random.nextInt(1, 20) * 10
+                val second = 200 - first
                 firstOperand = Random.nextInt(first)
                 secondOperand = Random.nextInt(second)
+            }
+
+            ACTION.MULTIPLICATION -> {
+                firstOperand = 2
+                secondOperand = Random.nextInt(11)
             }
         }
         userInput.clear()
@@ -113,6 +118,7 @@ class MainActivity : FragmentActivity() {
             when (action) {
                 ACTION.ADDITION -> "+"
                 ACTION.SUBTRACTION -> "-"
+                ACTION.MULTIPLICATION -> "×"
             },
             secondOperand.toString(),
             userInput.toString()
@@ -125,7 +131,7 @@ class MainActivity : FragmentActivity() {
         if (button.id == R.id.buttonOK) checkAnswer()
         val containsOnlyZero = userInput.length == 1 && userInput[0] == '0'
         if (!containsOnlyZero) {
-            if (userInput.length < 2) {
+            if (userInput.length < 3) {
                 when (button.id) {
                     R.id.button0 -> userInput.append("0")
                     R.id.button1 -> userInput.append("1")
@@ -148,6 +154,7 @@ class MainActivity : FragmentActivity() {
         val correctAnswer = when (action) {
             ACTION.ADDITION -> firstOperand + secondOperand
             ACTION.SUBTRACTION -> firstOperand - secondOperand
+            ACTION.MULTIPLICATION -> firstOperand * secondOperand
         }
         val userAnswer = userInput.toString().toInt()
         if (userAnswer == correctAnswer) {
@@ -177,6 +184,7 @@ class MainActivity : FragmentActivity() {
         when (action) {
             ACTION.ADDITION -> builder.append(" + ")
             ACTION.SUBTRACTION -> builder.append(" - ")
+            ACTION.MULTIPLICATION -> builder.append(" × ")
         }
         builder.append(secondOperand)
         builder.append(" = ")
@@ -248,7 +256,7 @@ class MainActivity : FragmentActivity() {
 
     companion object {
         const val DEBUG_LOG = "CHOP-CHOP"
-        const val DAILY_TASKS_COUNT = 10
+        const val DAILY_TASKS_COUNT = 15
         const val PREF_LAST_SUCCESS_DATE = "pref_last_success_date"
     }
 }
