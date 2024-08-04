@@ -9,7 +9,7 @@
     <dimen name="tinyMargin">4dp</dimen>
     <dimen name="dialogStrokeWidth">4dp</dimen>
     <dimen name="errorDialogTitleTextSize">60sp</dimen>
-    <dimen name="errorDialogMessageTextSize">80sp</dimen>
+    <dimen name="errorDialogMessageTextSize">70sp</dimen>
     <dimen name="normalMargin">16dp</dimen>
     <dimen name="largeMargin">32dp</dimen>
     <dimen name="bigMargin">64dp</dimen>

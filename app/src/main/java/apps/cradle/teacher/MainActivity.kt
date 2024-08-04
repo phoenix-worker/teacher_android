@@ -248,7 +248,7 @@ class MainActivity : FragmentActivity() {
 
     companion object {
         const val DEBUG_LOG = "CHOP-CHOP"
-        const val DAILY_TASKS_COUNT = 5
+        const val DAILY_TASKS_COUNT = 10
         const val PREF_LAST_SUCCESS_DATE = "pref_last_success_date"
     }
 }
