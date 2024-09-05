@@ -80,7 +80,7 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun generateTask() {
-        action = actionList[Random.nextInt(actionList.size)]
+        action = ACTION.MULTIPLICATION //actionList[Random.nextInt(actionList.size)]
         when (action) {
             ACTION.SUBTRACTION -> {
                 firstOperand = Random.nextInt(200)
@@ -100,9 +100,15 @@ class MainActivity : FragmentActivity() {
             }
 
             ACTION.MULTIPLICATION -> {
-                firstOperand = 2
+                firstOperand = listOf(2, 3)[Random.nextInt(2)]
                 secondOperand = Random.nextInt(11)
             }
+        }
+        // перемешиваем операнды
+        if (Random.nextInt(2) == 0) {
+            val temp = firstOperand
+            firstOperand = secondOperand
+            secondOperand = temp
         }
         userInput.clear()
     }
@@ -256,7 +262,7 @@ class MainActivity : FragmentActivity() {
 
     companion object {
         const val DEBUG_LOG = "CHOP-CHOP"
-        const val DAILY_TASKS_COUNT = 15
+        const val DAILY_TASKS_COUNT = 10
         const val PREF_LAST_SUCCESS_DATE = "pref_last_success_date"
     }
 }
