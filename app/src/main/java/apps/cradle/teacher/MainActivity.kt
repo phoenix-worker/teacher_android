@@ -30,7 +30,7 @@ class MainActivity : FragmentActivity() {
     private enum class ACTION { ADDITION, SUBTRACTION, MULTIPLICATION }
 
     private val actionList: List<ACTION> =
-        listOf(ACTION.ADDITION, ACTION.SUBTRACTION, ACTION.MULTIPLICATION)
+        listOf(/*ACTION.ADDITION, ACTION.SUBTRACTION,*/ ACTION.MULTIPLICATION)
 
     private var firstOperand: Int = 0
     private var secondOperand: Int = 0
@@ -100,16 +100,16 @@ class MainActivity : FragmentActivity() {
             }
 
             ACTION.MULTIPLICATION -> {
-                firstOperand = listOf(2, 3, 4)[Random.nextInt(3)]
+                firstOperand = Random.nextInt(11)
                 secondOperand = Random.nextInt(11)
             }
         }
         // перемешиваем операнды для умножения
-        if (action == ACTION.MULTIPLICATION && Random.nextInt(2) == 0) {
+/*        if (action == ACTION.MULTIPLICATION && Random.nextInt(2) == 0) {
             val temp = firstOperand
             firstOperand = secondOperand
             secondOperand = temp
-        }
+        }*/
         userInput.clear()
     }
 
@@ -262,7 +262,7 @@ class MainActivity : FragmentActivity() {
 
     companion object {
         const val DEBUG_LOG = "CHOP-CHOP"
-        const val DAILY_TASKS_COUNT = 20
+        const val DAILY_TASKS_COUNT = 30
         const val PREF_LAST_SUCCESS_DATE = "pref_last_success_date"
     }
 }
